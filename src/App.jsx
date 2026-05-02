@@ -3,13 +3,12 @@ import { AuthProvider, useAuth } from './hooks/useAuth'
 import LoginPage from './pages/LoginPage'
 import DashboardPage from './pages/DashboardPage'
 import RoomPage from './pages/RoomPage'
-import './index.css'
+import './index.css' // v2
 
 function AppInner() {
   const { user, homeId } = useAuth()
   const [currentRoom, setCurrentRoom] = useState(null)
 
-  // Still loading auth state
   if (user === undefined) {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 16 }}>
@@ -19,13 +18,8 @@ function AppInner() {
     )
   }
 
-  // Not signed in or no home yet
   if (!user || !homeId) return <LoginPage />
-
-  // Room detail
   if (currentRoom) return <RoomPage room={currentRoom} onBack={() => setCurrentRoom(null)} />
-
-  // Dashboard
   return <DashboardPage onSelectRoom={setCurrentRoom} />
 }
 
